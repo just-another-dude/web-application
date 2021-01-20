@@ -43,7 +43,7 @@ SCRIPT_LOG_FILE="${SCRIPT_LOG_DIR}/app-monitor-$(date +%Y-%m-%d-%H-%M-%S).log"
 #   1 if directory creation failed                     #
 ########################################################
 function create_directories() {
-  if (mkdir -p "${SCRIPT_LOG_DIR}"); then
+  if (mkdir "${SCRIPT_LOG_DIR}"); then
     echo "Directory: ${SCRIPT_LOG_DIR} has been successfully created (or already existed)"
     echo "Logs for this script will be found here: ${SCRIPT_LOG_FILE}"
     return 0
@@ -139,15 +139,15 @@ function install_terraform() {
 #   0 if the repo has been cloned to the SCRIPT_BASE_DIR,   #
 #   1 if cloning the repo failed.                           #
 #############################################################
-function clone_git_repo() {
-  if (git clone "${GITHUB_REPO}" "${SCRIPT_BASE_DIR}"); then
-    echo "Cloned repo: ${GITHUB_REPO} into directory: ${SCRIPT_BASE_DIR}"
-    return 0
-  else
-    echo "Failed to clone repo: ${GITHUB_REPO} into directory: ${SCRIPT_BASE_DIR}"
-    return 1
-  fi
-}
+# function clone_git_repo() {
+ # if (git clone "${GITHUB_REPO}" "${SCRIPT_BASE_DIR}"); then
+  #  echo "Cloned repo: ${GITHUB_REPO} into directory: ${SCRIPT_BASE_DIR}"
+   # return 0
+  # else
+   # echo "Failed to clone repo: ${GITHUB_REPO} into directory: ${SCRIPT_BASE_DIR}"
+    # return 1
+  # fi
+# }
 
 
 #################################################
@@ -195,12 +195,12 @@ function install_application() {
       ;;
   esac
 
-  if (! clone_git_repo); then
-    echo "Function 'clone_git_repo' has failed!"
-    return 1
-  else
-    echo "Function 'clone_git_repo' has succeeded!"
-  fi
+  # if (! clone_git_repo); then
+    # echo "Function 'clone_git_repo' has failed!"
+    # return 1
+  # else
+    # echo "Function 'clone_git_repo' has succeeded!"
+  # fi
   
   initialize_terraform_environment
   case "${?}" in
@@ -280,10 +280,9 @@ function stop_application() {
 
 function usage() {
   echo "-----------------------------------------------------------------------"
-  echo -e "Usage: $(basename "${0}") [ARGUMENT]"
-  echo -e "\nArguments:"
+  echo -e "Usage: $(dirname "${0}")/$(basename "${0}") [ARGUMENT]"
+  echo -e "\nArguments below must be run from: ${TERRAFORM_DIR}:"
   echo -e "\n  install     - first-time installation and environment setup"
-  echo -e "\n\n Arguments below must be run from: ${TERRAFORM_DIR}"
   echo -e "\n    start       - run the web application"
   echo -e "\n    stop        - stop the web application"
   echo "-----------------------------------------------------------------------"
