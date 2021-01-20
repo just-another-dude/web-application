@@ -235,7 +235,7 @@ function install_application() {
 #   3 if the local git repository update failed      #
 ######################################################
 function run_application() {
-  if (git pull .); then
+  if (git pull "${GITHUB_REPO}"); then
     echo "Local repository updated!"
     if (sudo terraform plan); then
       echo "Application ready to run!"
