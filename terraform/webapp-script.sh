@@ -43,7 +43,7 @@ SCRIPT_LOG_FILE="${SCRIPT_LOG_DIR}/app-monitor-$(date +%Y-%m-%d-%H-%M-%S).log"
 #   1 if directory creation failed                     #
 ########################################################
 function create_directories() {
-  if (mkdir "${SCRIPT_LOG_DIR}"); then
+  if (mkdir -p "${SCRIPT_LOG_DIR}"); then
     echo "Directory: ${SCRIPT_LOG_DIR} has been successfully created (or already existed)"
     echo "Logs for this script will be found here: ${SCRIPT_LOG_FILE}"
     return 0
