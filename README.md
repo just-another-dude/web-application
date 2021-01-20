@@ -27,7 +27,10 @@
 
 2. To install Terraform and initialize the environment, run: "./webapp-script.sh install". The script must always be run from the terraform directory as defined in the 'TERRAFORM_DIR' variable in the script.
 
-3. To start the web application, you may simply run: "./webapp-script.sh start". The script also supports docker image versioning, so if you want a different tag than "latest", you may run the following: "./webapp-script.sh start tomcat:<custom-tag> haproxy:<custom-tag>". Specifiying only one tag is also supported, for example: "./webapp-script.sh start haproxy:2.2".
+3. To start the web application, you may simply run: "./webapp-script.sh start".  
+The script also supports docker image versioning, so if you want a different tag than "latest", you may run the following:  
+"./webapp-script.sh start tomcat:<custom-tag> haproxy:<custom-tag>".  
+Specifiying only one tag is also supported, for example: "./webapp-script.sh start haproxy:2.2".
   
 4. To stop the application, run: "./webapp-script.sh stop".
 
