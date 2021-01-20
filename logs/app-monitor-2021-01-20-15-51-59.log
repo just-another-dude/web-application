@@ -1,0 +1,37 @@
+Starting 'main' function on: ip-172-31-13-26.eu-west-1.compute.internal
+[0m[1mdocker_network.private_docker_network: Destroying... [id=fcbd2be8770e420afe6d42c61f7238d293d25ac7d45173da301235e0849f31c2][0m[0m
+[0m[1mdocker_container.tomcat[1]: Destroying... [id=22a680e126512e2be74bc773954b7fa380c2294d92c343ddce9c08489940240e][0m[0m
+[0m[1mdocker_container.tomcat[2]: Destroying... [id=4db3b665fe355c4f2011ba2de85dfcfeb2daed737965feb74b20d5241477ac45][0m[0m
+[0m[1mdocker_container.tomcat[0]: Destroying... [id=e417a056117873a14ed230b3fa5df50fe23eccab2fc535e21fd1c8de1e241c11][0m[0m
+[0m[1mdocker_container.haproxy: Destroying... [id=ac8f5b0edca69c5a1fcfb79e169fed2a10ee78a3d9233de2ac00d1eb1cd8533b][0m[0m
+[0m[1mdocker_container.tomcat[2]: Destruction complete after 0s[0m[0m
+[0m[1mdocker_container.tomcat[1]: Destruction complete after 1s[0m[0m
+[0m[1mdocker_container.tomcat[0]: Destruction complete after 1s[0m[0m
+[0m[1mdocker_image.tomcat_image: Destroying... [id=sha256:040bdb29ab375db2a8de090070dcbee19d43f609385a934c3f2b423e515f57bbtomcat:latest][0m[0m
+[0m[1mdocker_image.tomcat_image: Destruction complete after 0s[0m[0m
+[0m[1mdocker_container.haproxy: Destruction complete after 1s[0m[0m
+[0m[1mdocker_image.haproxy_image: Destroying... [id=sha256:1816a50460c24049858cda1eaa6e4fd789f17bcf02ef34045dcc05ebe96db834haproxy:latest][0m[0m
+[0m[1mdocker_image.haproxy_image: Destruction complete after 0s[0m[0m
+[0m[1mdocker_network.private_docker_network: Destruction complete after 2s[0m[0m
+[33m
+[1m[33mWarning: [0m[0m[1mInterpolation-only expressions are deprecated[0m
+
+[0m  on main.tf line 28, in resource "docker_image" "tomcat_image":
+  28:   name = [4m"${var.tomcat_image_version}"[0m
+[0m
+Terraform 0.11 and earlier required all non-constant expressions to be
+provided via interpolation syntax, but this pattern is now deprecated. To
+silence this warning, remove the "${ sequence from the start and the }"
+sequence from the end of this expression, leaving just the inner expression.
+
+Template interpolation syntax is still used to construct strings from
+expressions when the template includes multiple interpolation sequences or a
+mixture of literal strings and interpolations. This deprecation applies only
+to templates that consist entirely of a single interpolation sequence.
+
+(and one more similar warning elsewhere)
+[0m[0m
+[0m[1m[32m
+Destroy complete! Resources: 7 destroyed.[0m
+Application stopped successfully!
+Function 'stop_application' finished successfully!

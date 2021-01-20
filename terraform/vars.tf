@@ -1,13 +1,13 @@
 variable "tomcat_image_version" {
     type = string
     description = "The version of the Docker container tomcat image"
-    default = "latest"
+    default = "tomcatlatest"
 }
 
 variable "haproxy_image_version" {
     type = string
     description = "The version of the Docker cotnainer HAProxy image"
-    default = "latest"
+    default = "haproxy:latest"
 }
 
 variable "home_directory" {

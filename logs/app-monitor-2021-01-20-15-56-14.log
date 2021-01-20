@@ -1,0 +1,19 @@
+Starting 'main' function on: ip-172-31-13-26.eu-west-1.compute.internal
+[0m[1mdocker_network.private_docker_network: Destroying... [id=d01f3e8695cf5b431375f5e0ce81ed48a398a0adcb35c70d419095df1f081f4d][0m[0m
+[0m[1mdocker_container.tomcat[0]: Destroying... [id=8841c5bd5bb7e168cce416f21adcd2d53d210fe0edea31748f7086c684e22e65][0m[0m
+[0m[1mdocker_container.tomcat[2]: Destroying... [id=8e78399f672de5a86ce9ed29f55772e4c504b323e03c0c2dc22c83c8d469dcbb][0m[0m
+[0m[1mdocker_container.haproxy: Destroying... [id=30dcccbd2213d7ec4e1a7968e6ea1b28e542c2890aaec280e6a54a01bc296cda][0m[0m
+[0m[1mdocker_container.tomcat[1]: Destroying... [id=e8fc4aec50b1248f4f64d36160b92056e927952762697160f1db2e9b9f5599a3][0m[0m
+[0m[1mdocker_container.haproxy: Destruction complete after 0s[0m[0m
+[0m[1mdocker_image.haproxy_image: Destroying... [id=sha256:a50e058f859a900e3cc2c1f69c651a7e85f877175bc2561880232cbce5db7d85haproxy:alpine][0m[0m
+[0m[1mdocker_image.haproxy_image: Destruction complete after 0s[0m[0m
+[0m[1mdocker_container.tomcat[0]: Destruction complete after 1s[0m[0m
+[0m[1mdocker_container.tomcat[2]: Destruction complete after 1s[0m[0m
+[0m[1mdocker_container.tomcat[1]: Destruction complete after 1s[0m[0m
+[0m[1mdocker_image.tomcat_image: Destroying... [id=sha256:040bdb29ab375db2a8de090070dcbee19d43f609385a934c3f2b423e515f57bbtomcat:latest][0m[0m
+[0m[1mdocker_image.tomcat_image: Destruction complete after 0s[0m[0m
+[0m[1mdocker_network.private_docker_network: Destruction complete after 2s[0m[0m
+[0m[1m[32m
+Destroy complete! Resources: 7 destroyed.[0m
+Application stopped successfully!
+Function 'stop_application' finished successfully!

@@ -25,7 +25,7 @@ resource "docker_network" "private_docker_network" {
 }
 
 resource "docker_image" "tomcat_image" {
-  name = "tomcat:${var.tomcat_image_version}"
+  name = var.tomcat_image_version
   keep_locally = true
 }
 
@@ -49,7 +49,7 @@ resource "docker_container" "tomcat" {
 }
 
 resource "docker_image" "haproxy_image" {
-  name = "haproxy:${var.haproxy_image_version}"
+  name = var.haproxy_image_version
   keep_locally = true
 }
 

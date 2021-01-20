@@ -31,6 +31,11 @@ readonly TERRAFORM_DIR="${SCRIPT_BASE_DIR}/terraform"
 # Log file for this script
 SCRIPT_LOG_FILE="${SCRIPT_LOG_DIR}/app-monitor-$(date +%Y-%m-%d-%H-%M-%S).log"
 
+### Regular Variables ###
+
+tomcat_container_image="tomcat:latest"
+haproxy_container_image="haproxy:latest"
+
 
 ########################################################
 # Create the required script directories               #
@@ -57,7 +62,7 @@ function create_directories() {
 # due to logging configuration which requires the directory to already exist.
 if (! create_directories); then
   echo "Function 'create_directories' has failed!"
-  return 1
+  exit 1
 else
   echo "Function 'create_directories' has succeeded!"
 fi
@@ -88,6 +93,25 @@ function check_linux_user() {
     return 0
   else
     return 1
+  fi
+}
+
+
+###################################################################
+# Check whether the script is running from the correct directory  #
+# Globals:                                                        #
+#   None                                                          #
+# Arguments:                                                      #
+#   None                                                          #
+# Returns:                                                        #
+#   0 if directory is correct, 1 if not.                          #
+###################################################################
+function check_working_directory() {
+  working_directory=$(pwd)
+  if [[ "${working_directory}" != "${TERRAFORM_DIR}" ]]; then
+    return 1
+  else
+    return 0
   fi
 }
 
@@ -127,27 +151,6 @@ function install_terraform() {
     return 3
   fi
 }
-
-
-#############################################################
-# Clone the GitHub repository to the script base directory  #
-# Globals:                                                  #
-#   SCRIPT_BASE_DIR                                         #
-# Arguments:                                                #
-#   None                                                    #
-# Returns:                                                  #
-#   0 if the repo has been cloned to the SCRIPT_BASE_DIR,   #
-#   1 if cloning the repo failed.                           #
-#############################################################
-# function clone_git_repo() {
- # if (git clone "${GITHUB_REPO}" "${SCRIPT_BASE_DIR}"); then
-  #  echo "Cloned repo: ${GITHUB_REPO} into directory: ${SCRIPT_BASE_DIR}"
-   # return 0
-  # else
-   # echo "Failed to clone repo: ${GITHUB_REPO} into directory: ${SCRIPT_BASE_DIR}"
-    # return 1
-  # fi
-# }
 
 
 #################################################
@@ -194,13 +197,6 @@ function install_application() {
       # Further checks warranted
       ;;
   esac
-
-  # if (! clone_git_repo); then
-    # echo "Function 'clone_git_repo' has failed!"
-    # return 1
-  # else
-    # echo "Function 'clone_git_repo' has succeeded!"
-  # fi
   
   initialize_terraform_environment
   case "${?}" in
@@ -237,9 +233,17 @@ function install_application() {
 function run_application() {
   if (git pull "${GITHUB_REPO}"); then
     echo "Local repository updated!"
-    if (sudo terraform plan); then
+    if (sudo terraform plan \
+        -var="tomcat_image_version=${tomcat_container_image}" \
+        -var="haproxy_image_version=${haproxy_container_image}"); then
+      
       echo "Application ready to run!"
-      if (sudo terraform apply -auto-approve); then
+      echo "Tomcat container image: ${tomcat_container_image}"
+      echo "HAProxy container image: ${haproxy_container_image}"
+      if (sudo terraform apply -auto-approve \
+          -var="tomcat_image_version=${tomcat_container_image}" \
+          -var="haproxy_image_version=${haproxy_container_image}"); then
+        
         echo "Application started successfully!"
         return 0
       else
@@ -280,21 +284,27 @@ function stop_application() {
 
 function usage() {
   echo "-----------------------------------------------------------------------"
-  echo -e "Usage: $(dirname "${0}")/$(basename "${0}") [ARGUMENT]"
-  echo -e "\nArguments below must be run from: ${TERRAFORM_DIR}:"
-  echo -e "\n  install     - first-time installation and environment setup"
+  echo -e "Usage: $(dirname "${0}")/$(basename "${0}") [ARGUMENT] [OPTIONS]"
+  echo -e "\nArguments"
+  echo -e "\n    install     - first-time installation and environment setup"
   echo -e "\n    start       - run the web application"
   echo -e "\n    stop        - stop the web application"
+  echo -e "\nOptions"
+  echo -e "\n    tomcat container image (e.g. tomcat:latest)"
+  echo -e "\n    HAProxy container image (e.g. haproxy:latest)"
   echo "-----------------------------------------------------------------------"
 }
 
 
 function main() {
   echo "Starting 'main' function on: ${HOSTNAME}"
-  if (check_linux_user); then
-    echo "User: ${USER} is running the script and is allowed to do so"
-  else
-    echo "User: ${USER} is not allowed to run the script!"
+  if (! check_linux_user); then
+    echo "Script must be run as: ${ALLOWED_USER}"
+    return 1
+  fi
+
+  if (! check_working_directory); then
+    echo "Script must be run from: ${TERRAFORM_DIR}"
     return 1
   fi
 
@@ -307,6 +317,31 @@ function main() {
     fi
   
   elif [[ "${ACTION}" == "start" ]]; then
+    if [[ -n "${2}" ]]; then
+      
+      # Check option commandline argument 1
+      if [[ "${2}" == *"tomcat"* ]]; then
+        tomcat_container_image="${2}"
+      elif [[ "${2}" == *"haproxy"* ]]; then
+        haproxy_container_image="${2}"
+      else
+        echo "Unknown option: ${2}"
+        return 1
+      fi
+      
+      # Check commandline argument 2
+      if [[ -n "${3}" ]]; then
+        if [[ "${3}" == *"tomcat"* ]]; then
+          tomcat_container_image="${3}"
+        elif [[ "${3}" == *"haproxy"* ]]; then
+          haproxy_container_image="${3}"
+        else
+          echo "Unknown option: ${3}"
+          return 1
+        fi
+      fi
+    fi
+
     if (run_application); then
       echo "Function 'run_application' finished successfully!"
     else
@@ -331,5 +366,5 @@ function main() {
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-  main "$@"
+  main "${@}"
 fi
