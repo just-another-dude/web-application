@@ -44,6 +44,7 @@ I implemented a docker bridge network for easier communication between the conta
 
 "git pull" is run as part of starting the application, so no need to do that when changing something.
 
+
 # Files
 * haproxy.cfg --> HAProxy configuration that is bound to the docker container from the host.
 * haproxy-health-display.sh --> A script which creates the HTML file for the HAProxy to serve and then runs the HAProxy.
@@ -54,6 +55,12 @@ I implemented a docker bridge network for easier communication between the conta
 * Additional exception handling
 * Terraform Binary URL can be changed to anything you want. The point is to have a binary with a specific version in a location you control such as S3 so that version incompatibility does not occur.
 * More options and ease of use for the user.
+
+
+# Challenges
+1. How to display the hostname in the HTML page. Javascript was attempted before realizing that is executed by the client and does not show the actual container's hostname.
+2. After realizing it needed to be done as part of bash, there were some challenges when attempting to integrate with the terraform as the default container image command that runs the app got overridden.
+
 
 # References / Documentation / Sources:
 * https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs - Terraform docker provider
