@@ -60,6 +60,10 @@ I implemented a docker bridge network for easier communication between the conta
 * Additional exception handling
 * Terraform Binary URL can be changed to anything you want. The point is to have a binary with a specific version in a location you control such as S3 so that version incompatibility does not occur.
 * More options and ease of use for the user.
+* Make the script more generic. For example, if the allowed user is different or the script home directory is different, think of an easy editing mechanism.
+* Support HTTPS pulls from git natively in the script.
+* Consider using the features from the following section in the Terraform code (such as healthcheck):  
+https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs/resources/service
 
 
 # Challenges
