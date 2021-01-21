@@ -40,7 +40,7 @@ After starting the application, you may check the running containers by running:
 You can check if the application is functioning properly by running this from the host: "curl http://localhost:42069".
 The HAProxy will do round-robin load balancing to each of the tomcats.
 
-To reach the health check endpoint for the tomcats, run this from the host: "curl http://localhost:42069/healthcheck/".
+To reach the health check endpoint for the tomcats, run this from the host: "curl http://localhost:42069/healthcheck/".  
 To reach the HAProxy health check endpoint, run this from the host: "curl http://localhost:42069/lb_health.html".
 
 I implemented a docker bridge network for easier communication between the containers.
@@ -67,7 +67,7 @@ I implemented a docker bridge network for easier communication between the conta
 
 # References / Documentation / Sources:
 * https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs - Terraform docker provider
-* https://hub.docker.com/_/tomcat - Tomcat docker contaer image
-* https://hub.docker.com/_/haproxy - HAProxy docker contaer image
+* https://hub.docker.com/_/tomcat - Tomcat docker container image
+* https://hub.docker.com/_/haproxy - HAProxy docker container image
 * https://discourse.haproxy.org/t/how-do-i-serve-a-single-static-file-from-haproxy/32 - Serve HTTP file in HAProxy
 * https://www.shellcheck.net/ - Shell script checker
