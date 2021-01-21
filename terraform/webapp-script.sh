@@ -317,19 +317,19 @@ function main() {
     fi
   
   elif [[ "${ACTION}" == "start" ]]; then
-    if [[ -n "${2}" ]]; then
-      
-      # Check option commandline argument 1
+    if [[ -n "${2}" ]]; then  # If commandline argument #2 exists. 
+      # Check versioning option - commandline argument 2
       if [[ "${2}" == *"tomcat"* ]]; then
         tomcat_container_image="${2}"
       elif [[ "${2}" == *"haproxy"* ]]; then
         haproxy_container_image="${2}"
       else
         echo "Unknown option: ${2}"
+        usage
         return 1
       fi
       
-      # Check commandline argument 2
+      # Check versioning option - commandline argument 3
       if [[ -n "${3}" ]]; then
         if [[ "${3}" == *"tomcat"* ]]; then
           tomcat_container_image="${3}"
@@ -337,6 +337,7 @@ function main() {
           haproxy_container_image="${3}"
         else
           echo "Unknown option: ${3}"
+          usage
           return 1
         fi
       fi
