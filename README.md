@@ -29,7 +29,7 @@
 
 3. To start the web application, you may simply run: "./webapp-script.sh start".  
 The script also supports docker image versioning, so if you want a different tag than "latest", you may run the following:  
-"./webapp-script.sh start tomcat:<custom-tag> haproxy:<custom-tag>".  
+"./webapp-script.sh start tomcat:custom-tag haproxy:custom-tag".  
 Specifiying only one tag is also supported, for example: "./webapp-script.sh start haproxy:2.2".
   
 4. To stop the application, run: "./webapp-script.sh stop".
