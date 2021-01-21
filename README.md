@@ -23,7 +23,9 @@
 
 
 # Installation & Usage  
-1. Clone this project into the allowed user's home directory (variable 'ALLOWED_USER' is configured as 'michael' in the script). The script supports SSH by default, but this can be changed as well by editing the 'GITHUB_REPO' variable.
+1. Clone this project into the allowed user's home directory (variable 'ALLOWED_USER' is configured as 'michael' in the script).  
+The 'ALLOWED_USER' defines which user will be permitted to run the script.  
+The script supports SSH by default, but this can be changed as well by editing the 'GITHUB_REPO' variable, so make sure to change it to HTTPS in case that's the access you have.  
 
 2. To install Terraform and initialize the environment, run: "./webapp-script.sh install". The script must always be run from the terraform directory as defined in the 'TERRAFORM_DIR' variable in the script.
 
